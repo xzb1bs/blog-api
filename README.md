@@ -13,6 +13,8 @@ python manage.py runserver
 The root URL redirects to the browsable API index at `/api/`. The Django admin
 is available at `/admin/`.
 
+Login uses **email**, not username. The user model is `apps.auths.User`.
+
 ## API routes
 
 - `GET /api/posts/` and `GET /api/posts/<slug>/` — list and view published
@@ -22,10 +24,10 @@ is available at `/admin/`.
 - `GET /api/categories/` and `GET /api/tags/` — list categories and tags.
 - `GET /api/posts/<slug>/comments/` — list comments on a published post.
 - `POST /api/posts/<slug>/comments/` — add a comment as an authenticated user.
-- `POST /api/auth/register/` — register a user with `username`, `email`, and
-  `password`.
+- `POST /api/auth/register/` — register a user with `email`, `first_name`,
+  `last_name`, and `password`.
 - `POST /api/auth/token/` and `POST /api/auth/token/refresh/` — obtain and
-  refresh JWTs. Token login uses the existing Django `username` and `password`.
+  refresh JWTs. Token login uses `email` and `password`.
 
 Send authenticated requests with `Authorization: Bearer <access-token>`.
 Public users can read published content; creating and changing content requires

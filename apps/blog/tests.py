@@ -9,14 +9,16 @@ class BlogApiTests(APITestCase):
     def setUp(self):
         user_model = get_user_model()
         self.author = user_model.objects.create_user(
-            username="author",
             email="author@example.com",
             password="Strong-test-password-123",
+            first_name="Author",
+            last_name="User",
         )
         self.other_user = user_model.objects.create_user(
-            username="reader",
             email="reader@example.com",
             password="Strong-test-password-123",
+            first_name="Reader",
+            last_name="User",
         )
         self.category = Category.objects.create(name="News", slug="news")
         self.published_post = Post.objects.create(
@@ -114,10 +116,10 @@ class BlogApiTests(APITestCase):
         self.assertEqual(comment.author, self.other_user)
         self.assertEqual(comment.post, self.published_post)
 
-    def test_jwt_token_can_be_obtained_with_existing_username(self):
+    def test_jwt_token_can_be_obtained_with_email(self):
         response = self.client.post(
             "/api/auth/token/",
-            {"username": "author", "password": "Strong-test-password-123"},
+            {"email": "author@example.com", "password": "Strong-test-password-123"},
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -128,12 +130,13 @@ class BlogApiTests(APITestCase):
         response = self.client.post(
             "/api/auth/register/",
             {
-                "username": "new-user",
                 "email": "new-user@example.com",
+                "first_name": "New",
+                "last_name": "User",
                 "password": "Strong-test-password-123",
             },
         )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        new_user = get_user_model().objects.get(username="new-user")
+        new_user = get_user_model().objects.get(email="new-user@example.com")
         self.assertTrue(new_user.check_password("Strong-test-password-123"))

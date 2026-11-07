@@ -17,7 +17,7 @@ class TagSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    author = serializers.CharField(source="author.username", read_only=True)
+    author = serializers.CharField(source="author.email", read_only=True)
     category = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(), allow_null=True, required=False
     )
@@ -43,7 +43,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.CharField(source="author.username", read_only=True)
+    author = serializers.CharField(source="author.email", read_only=True)
 
     class Meta:
         model = Comment
@@ -56,7 +56,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = get_user_model()
-        fields = ("id", "username", "email", "password")
+        fields = ("id", "email", "first_name", "last_name", "password")
         read_only_fields = ("id",)
 
     def validate_password(self, value):
