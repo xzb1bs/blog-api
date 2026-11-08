@@ -35,6 +35,42 @@ authentication.
 
 Run the API tests with:
 
-```powershell
 python manage.py test apps.blog
-```
+
+
+
+ Seeding
+
+Fill the database with fake data (users, categories, tags, posts, comments):
+
+python manage.py seed
+
+
+Seed example
+  
+users:    20 created
+categories:     8 created
+tags:     9 created
+posts:   100 created
+comments:   200 created
+Seeding completed in 1.55 seconds
+
+
+All seeded users have the same password, stored in the `SEED_PASSWORD`
+constant in `apps/blog/management/commands/seed.py`.
+Running the command twice in a row is safe: existing emails, slugs,
+categories and tags are skipped.
+
+
+Admin
+On an empty database:
+python manage.py migrate
+python manage.py seed
+python manage.py createsuperuser
+python manage.py runserver
+
+
+Then open http://127.0.0.1:8000/admin/
+
+
+Screenshots in the docs folder
