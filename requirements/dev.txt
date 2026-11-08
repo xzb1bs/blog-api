@@ -1,3 +1,4 @@
 -r base.txt
 ruff
 ipython
+Faker==40.44.0

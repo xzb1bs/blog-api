@@ -10,6 +10,7 @@ ALLOWED_HOSTS = ALLOWED_HOSTS
 BLOG_ENV_ID = ENV_ID
 
 INSTALLED_APPS = [
+    "unfold",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -19,6 +20,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "apps.auths.apps.AuthsConfig",
     "apps.blog.apps.BlogConfig",
+    "django_seed",
 ]
 
 MIDDLEWARE = [
@@ -40,7 +42,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
